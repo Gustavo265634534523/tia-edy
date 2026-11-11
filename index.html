@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIA EDY · Passeios com Pets</title>
+  <meta name="description" content="Passeios com pets feitos com carinho, segurança e atenção. Agende pelo WhatsApp.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       TEMA PREMIUM CLARO
+       ========================================================= */
+    :root {
+      --fundo: #ffffff;          /* branco */
+      --fundo-suave: #fcf9f4;    /* branco levemente quente */
+      --branco: #ffffff;
+      --cinza-100: #f7f2ea;
+      --cinza-200: #eee4d3;
+      --cinza-300: #e2d2b6;
+      --cinza-400: #b9a993;
+      --cinza-500: #7a6f63;
+      --tinta: #241d15;          /* texto escuro quente */
+      --ouro: #b8924f;           /* dourado principal */
+      --ouro-escuro: #977434;
+      --ouro-claro: #f5ecdc;
+      --areia: #c9a464;          /* patinhas douradas */
+      --sombra: 0 20px 50px rgba(120, 90, 40, .10);
+      --raio: 28px;
+      --fonte: "Inter", "Segoe UI", system-ui, sans-serif;
+      --script: "Pacifico", "Brush Script MT", cursive;   /* fonte da marca */
+    }
+
+    /* Fonte da marca (Pacifico) em títulos, menu, botões e rótulos */
+    .titulo-duplo, .marca, .nav-links a, .menu-mobile a, .pilula, .eyebrow,
+    .passeio h3, .beneficio h3, .passo h3, .passeio-foto .selo, .passo::before, .beneficio .num {
+      font-family: var(--script) !important;
+      font-weight: 400 !important;
+      letter-spacing: 0 !important;
+      text-transform: none !important;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      font-family: var(--fonte);
+      font-weight: 400;
+      color: var(--tinta);
+      background: var(--fundo);
+      line-height: 1.65;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: min(1180px, 100% - 64px); margin-inline: auto; position: relative; }
+
+    /* Rótulo pequeno em maiúsculas */
+    .eyebrow {
+      font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ouro);
+    }
+
+    /* Título em duas linhas sobrepostas, dois tons (assinatura da skill) */
+    .titulo-duplo {
+      font-weight: 400; line-height: 1.2;
+    }
+    .titulo-duplo span { display: block; }
+    .titulo-duplo .t1 { color: var(--ouro); }
+    .titulo-duplo .t2 { color: var(--tinta); margin-top: -.12em; }
+
+    /* Pincelada dourada atrás da marca, como na arte "Cuidado Pet" */
+    .pincel {
+      position: relative; display: inline-block; padding: .05em .45em .2em; z-index: 0;
+    }
+    .pincel::before {
+      content: ""; position: absolute; inset: .12em 0 .08em; z-index: -1;
+      background: linear-gradient(90deg, #f3d39a, #f6dcaa 40%, #efc983);
+      border-radius: 45% 30% 40% 25% / 60% 40% 55% 45%;
+      transform: rotate(-1.5deg);
+    }
+
+    /* Botões em pílula */
+    .pilula {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .8rem 1.5rem; border-radius: 999px;
+      font-size: .95rem; font-weight: 500;
+      transition: background-color .25s, color .25s, border-color .25s;
+      border: 1px solid transparent; white-space: nowrap;
+    }
+    .pilula svg { width: 18px; height: 18px; }
+    .pilula-escura { background: var(--ouro); color: #fff; box-shadow: 0 8px 22px rgba(184, 146, 79, .30); }
+    .pilula-escura:hover { background: var(--ouro-escuro); }
+    .pilula-suave { background: #fff; color: var(--tinta); border-color: var(--cinza-300); }
+    .pilula-suave:hover { border-color: var(--ouro); color: var(--ouro-escuro); }
+    .pilula-branca { background: rgba(255, 255, 255, .9); color: var(--tinta); border-color: var(--cinza-300); backdrop-filter: blur(6px); }
+    .pilula-branca:hover { background: #fff; border-color: var(--ouro); }
+
+    /* Animação contida */
+    @keyframes fade-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .anim { animation: fade-rise .8s ease-out both; }
+    .anim-2 { animation-delay: .2s; }
+    .anim-3 { animation-delay: .4s; }
+
+    /* =========================================================
+       NAVBAR
+       ========================================================= */
+    .nav {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+    }
+    .nav .container {
+      display: flex; align-items: center; justify-content: space-between; padding: 1.6rem 0;
+    }
+    .marca { font-size: 1.55rem; display: flex; align-items: center; gap: .3rem; color: var(--tinta); }
+    .eyebrow { font-size: 1.05rem; }
+    .pilula { font-size: 1rem; padding: .7rem 1.5rem .85rem; }
+    .marca svg { width: 26px; height: 26px; color: var(--areia); }
+    .nav-links { display: flex; gap: 2.2rem; font-size: .95rem; }
+    .nav-links a { color: #4a4036; transition: color .2s; }
+    .nav-links a:hover { color: var(--ouro); }
+
+    /* Menu mobile (sem JS: checkbox) */
+    #menu-toggle { display: none; }
+    .hamburguer {
+      display: none; width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255, 255, 255, .85); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; cursor: pointer;
+    }
+    .hamburguer span, .hamburguer span::before, .hamburguer span::after {
+      display: block; width: 18px; height: 1.5px; background: var(--tinta); position: relative; transition: .25s;
+    }
+    .hamburguer span::before, .hamburguer span::after { content: ""; position: absolute; left: 0; }
+    .hamburguer span::before { top: -6px; }
+    .hamburguer span::after { top: 6px; }
+    .menu-mobile {
+      display: none; position: absolute; top: 84px; left: 16px; right: 16px;
+      background: rgba(255, 255, 255, .95); backdrop-filter: blur(12px);
+      border-radius: 22px; padding: 1rem; box-shadow: var(--sombra);
+    }
+    .menu-mobile a { display: block; padding: .85rem 1rem; border-radius: 14px; color: #374151; }
+    .menu-mobile a:hover { background: var(--cinza-100); }
+    .menu-mobile .pilula { width: 100%; margin-top: .5rem; color: #fff; }
+    #menu-toggle:checked ~ .menu-mobile { display: block; }
+    #menu-toggle:checked ~ .container .hamburguer span { background: transparent; }
+    #menu-toggle:checked ~ .container .hamburguer span::before { top: 0; transform: rotate(45deg); }
+    #menu-toggle:checked ~ .container .hamburguer span::after { top: 0; transform: rotate(-45deg); }
+
+    /* =========================================================
+       HERO: golden animado com a frase de fundo por cima
+       ========================================================= */
+    .hero {
+      position: relative; overflow: hidden; background: var(--fundo);
+      min-height: 100vh; padding: 96px 0 1.5rem !important;
+      display: flex; align-items: center;
+    }
+    .hero .container { width: min(1180px, 100% - 64px); }
+    .hero-palco {
+      position: relative; aspect-ratio: 16 / 9; width: min(100%, calc((100vh - 120px) * 16 / 9));
+      margin: 0 auto;
+    }
+    .hero-frase {
+      position: absolute; left: 0; right: 0; top: 0; z-index: 0; text-align: center;
+    }
+    .hero-frase .eyebrow { display: block; margin-bottom: .2rem; }
+    .hero-frase h1 { font-size: clamp(2.2rem, 4.2vw, 3.7rem); line-height: 1.1; }
+    .hero-amor {
+      position: absolute; left: 39%; top: 19%; transform: translateX(-50%); z-index: 0;
+      font-family: var(--script); font-size: clamp(6rem, 15vw, 12.5rem); line-height: 1;
+      color: #efdcb6; white-space: nowrap; user-select: none;
+    }
+    /* o fundo branco do vídeo some sobre a página (multiply), deixando a frase atrás aparecer */
+    .hero-video {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      z-index: 1; mix-blend-mode: multiply; pointer-events: none;
+      filter: brightness(1.06) contrast(1.04);
+    }
+    .hero-rodape {
+      position: absolute; left: 0; top: 51%; z-index: 2; max-width: 25%; text-align: left;
+    }
+    .hero-rodape p { font-size: .98rem; color: #4a4036; margin-bottom: 1.2rem; }
+    .hero-ctas { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .hero-servicos {
+      display: flex; flex-direction: column; align-items: flex-start; gap: .7rem; margin-top: 1.2rem;
+    }
+    .pilula-servico { background: var(--ouro-claro); color: var(--ouro-escuro); border-color: var(--cinza-300); }
+    .pilula-servico:hover { background: #fff; border-color: var(--ouro); }
+    /* os 4 botões do topo: fundo dourado e letra preta */
+    .hero-rodape .pilula { background: var(--ouro); color: var(--tinta); border-color: var(--ouro); }
+    .hero-rodape .pilula:hover { background: var(--areia); border-color: var(--areia); color: var(--tinta); }
+
+    /* =========================================================
+       SEÇÕES GERAIS
+       ========================================================= */
+    section { padding: 8rem 0; position: relative; z-index: 2; }
+    .cabecalho-secao { max-width: 720px; margin-bottom: 4rem; }
+    .cabecalho-secao.centro { text-align: center; margin-inline: auto; }
+    .cabecalho-secao .eyebrow { display: block; margin-bottom: 1.2rem; }
+    .cabecalho-secao h2 { font-size: clamp(2.6rem, 5.5vw, 4.2rem); }
+    .cabecalho-secao p { color: var(--cinza-500); font-size: 1.1rem; margin-top: 1.4rem; max-width: 560px; }
+    .cabecalho-secao.centro p { margin-inline: auto; }
+
+    /* ---------------- Passeios ---------------- */
+    .grade-passeios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+    .passeio {
+      background: var(--branco); border-radius: var(--raio); overflow: hidden;
+      border: 1px solid var(--cinza-100); display: flex; flex-direction: column;
+      transition: box-shadow .35s, transform .35s;
+    }
+    .passeio:hover { box-shadow: var(--sombra); transform: translateY(-4px); }
+    .passeio-foto { aspect-ratio: 4 / 3; overflow: hidden; position: relative; }
+    .passeio-foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+    .passeio:hover .passeio-foto img { transform: scale(1.04); }
+    .passeio-foto .selo {
+      position: absolute; top: 16px; left: 16px; padding: .35rem .85rem; border-radius: 999px;
+      background: rgba(255, 255, 255, .9); backdrop-filter: blur(6px);
+      font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .passeio-corpo { padding: 1.8rem 1.8rem 2rem; display: flex; flex-direction: column; flex: 1; }
+    .passeio h3 { font-size: 1.35rem; font-weight: 500; letter-spacing: -.02em; margin-bottom: .5rem; }
+    .passeio p { color: var(--cinza-500); font-size: .95rem; flex: 1; margin-bottom: 1.4rem; }
+    .passeio-rodape { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tags span { font-size: .76rem; color: #4b5563; background: var(--cinza-100); padding: .28rem .7rem; border-radius: 999px; }
+    .seta {
+      flex: none; width: 42px; height: 42px; border-radius: 50%; background: var(--cinza-100);
+      display: grid; place-items: center; transition: background .25s, color .25s;
+    }
+    .seta svg { width: 18px; height: 18px; }
+    .passeio:hover .seta { background: var(--ouro); color: #fff; }
+
+    /* ---------------- Benefícios ---------------- */
+    .beneficios { background: var(--fundo-suave); }
+    .beneficios-grade { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .beneficios-foto { border-radius: var(--raio); overflow: hidden; aspect-ratio: 4 / 5; }
+    .beneficios-foto img { width: 100%; height: 100%; object-fit: cover; }
+    .lista-beneficios { display: grid; gap: 0; margin-top: 2.6rem; }
+    .beneficio {
+      display: grid; grid-template-columns: 56px 1fr; gap: 1.2rem; padding: 1.4rem 0;
+      border-top: 1px solid var(--cinza-200);
+    }
+    .beneficio:last-child { border-bottom: 1px solid var(--cinza-200); }
+    .beneficio .num { font-size: .85rem; color: var(--cinza-400); font-weight: 500; padding-top: .2rem; }
+    .beneficio h3 { font-size: 1.15rem; font-weight: 500; letter-spacing: -.01em; margin-bottom: .2rem; }
+    .beneficio p { color: var(--cinza-500); font-size: .95rem; }
+
+    /* ---------------- Quem sou ---------------- */
+    .quem-grade { display: grid; grid-template-columns: 1.05fr .95fr; gap: 5rem; align-items: center; }
+    .quem-texto p { color: var(--cinza-500); font-size: 1.05rem; margin-bottom: 1.1rem; }
+    .lista-check { list-style: none; display: grid; gap: .8rem; margin: 2rem 0 2.6rem; }
+    .lista-check li { display: flex; gap: .85rem; align-items: flex-start; color: #374151; }
+    .lista-check li::before {
+      content: ""; flex: none; width: 20px; height: 20px; margin-top: .2rem; border-radius: 50%;
+      background: var(--ouro) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center / 11px no-repeat;
+    }
+    .quem-fotos { display: block; }
+    .quem-fotos .foto-tia {
+      width: 100%; height: auto; aspect-ratio: 1600 / 1479; object-fit: cover;
+      border-radius: 28px; box-shadow: var(--sombra);
+    }
+
+    /* ---------------- Como funciona ---------------- */
+    .como { background: var(--fundo-suave); }
+    .passos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; counter-reset: passo; }
+    .passo {
+      background: var(--branco); border: 1px solid var(--cinza-200); border-radius: 24px;
+      padding: 2rem 1.7rem 2.2rem; counter-increment: passo;
+    }
+    .passo::before {
+      content: "0" counter(passo); display: block; font-size: 2.6rem; font-weight: 300;
+      letter-spacing: -.04em; color: var(--ouro); margin-bottom: 2.4rem;
+    }
+    .passo h3 { font-size: 1.15rem; font-weight: 500; margin-bottom: .35rem; }
+    .passo p { color: var(--cinza-500); font-size: .93rem; }
+
+    /* ---------------- Agendamento ---------------- */
+    .agendar { padding-top: 6rem; }
+    .agendar-grade { display: grid; grid-template-columns: .9fr 1.1fr; gap: 4rem; align-items: start; }
+    .agendar-intro { min-width: 0; }
+    .agendar-intro h2 { font-size: clamp(2.4rem, 4.6vw, 3.8rem); margin: 1rem 0 1.2rem; }
+    .agendar-intro > p { color: var(--cinza-500); font-size: 1.05rem; max-width: 460px; }
+    .agendar-foto { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 24px; margin: 2rem 0 1.2rem; }
+    .agendar-fone { color: var(--cinza-500); font-size: .95rem; margin-top: 1rem; }
+    .agendar-fone strong { color: var(--tinta); font-weight: 600; }
+    .agendar-fone a:hover strong { color: var(--ouro-escuro); }
+    .contatos { list-style: none; display: grid; gap: .35rem; margin-top: .5rem; color: var(--cinza-500); font-size: .95rem; }
+    .contatos strong { color: var(--tinta); font-weight: 600; overflow-wrap: anywhere; }
+    .contatos a:hover strong { color: var(--ouro-escuro); }
+
+    .form-agendar {
+      min-width: 0; background: var(--branco); border: 1px solid var(--cinza-200); border-radius: 28px;
+      padding: 2.4rem; box-shadow: var(--sombra); display: grid; gap: 1.4rem;
+    }
+    .campo { display: grid; gap: .5rem; border: 0; min-width: 0; }
+    .campo label, .campo legend {
+      font-family: var(--script); font-size: 1.15rem; color: var(--tinta); padding: 0;
+    }
+    .campo legend { margin-bottom: .5rem; }
+    .campo input[type="text"] {
+      width: 100%; font: inherit; font-size: 1rem; color: var(--tinta);
+      background: var(--fundo-suave); border: 1px solid var(--cinza-200); border-radius: 14px;
+      padding: .9rem 1rem; transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .campo input[type="text"]::placeholder { color: var(--cinza-400); }
+    .campo input[type="text"]:focus { outline: none; border-color: var(--ouro); background: #fff; box-shadow: 0 0 0 4px var(--ouro-claro); }
+    .campo input.invalido { border-color: #c2553f; }
+    .opcoes { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .opcoes input { position: absolute; opacity: 0; pointer-events: none; }
+    .opcoes label {
+      flex: 1 1 120px; text-align: center; cursor: pointer; padding: .75rem 1rem; border-radius: 999px;
+      border: 1px solid var(--cinza-300); background: #fff; font-size: 1.05rem; transition: .2s;
+    }
+    .opcoes label:hover { border-color: var(--ouro); }
+    .opcoes input:checked + label { background: var(--ouro); border-color: var(--ouro); color: #fff; }
+    .opcoes input:focus-visible + label { box-shadow: 0 0 0 4px var(--ouro-claro); }
+    .opcoes.invalido label { border-color: #c2553f; }
+    .linha { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .modo { display: grid; gap: 1.4rem; }
+
+    /* Formulário em fonte simples e legível (a cursiva fica só nos títulos do site) */
+    .form-agendar .campo label, .form-agendar .campo legend, .form-agendar .pilula,
+    .form-agendar .agenda-topo strong {
+      font-family: var(--fonte) !important;
+      letter-spacing: 0 !important;
+    }
+    .form-agendar .campo > label, .form-agendar .campo > legend {
+      font-size: 1rem; font-weight: 600 !important; color: var(--tinta);
+    }
+    .form-agendar .opcoes label { font-size: .98rem; font-weight: 500 !important; color: var(--tinta); }
+    .form-agendar .opcoes input:checked + label { color: #fff; }
+    .form-agendar .agenda-topo strong { font-size: 1.05rem; font-weight: 600 !important; }
+    .form-agendar .form-enviar { font-size: 1.08rem; font-weight: 600 !important; }
+    [hidden] { display: none !important; }
+    .opcional { font-family: var(--fonte); font-size: .8rem; color: var(--cinza-400); }
+    .opcoes label { font-size: 1rem; display: flex; align-items: center; justify-content: center; line-height: 1.25; }
+    .horas { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
+    .horas label { flex: none; padding: .55rem .4rem; font-family: var(--fonte); font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+    /* Calendário */
+    .agenda {
+      border: 1px solid var(--cinza-200); border-radius: 20px; padding: 1rem; background: var(--fundo-suave);
+    }
+    .agenda.invalido { border-color: #c2553f; }
+    .agenda-topo { display: flex; align-items: center; justify-content: space-between; margin-bottom: .6rem; }
+    .agenda-topo strong { font-family: var(--script); font-weight: 400; font-size: 1.2rem; color: var(--tinta); }
+    .agenda-nav {
+      width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--cinza-300); background: #fff;
+      color: var(--tinta); font-size: 1.3rem; line-height: 1; cursor: pointer; transition: .2s;
+    }
+    .agenda-nav:hover:not(:disabled) { border-color: var(--ouro); color: var(--ouro-escuro); }
+    .agenda-nav:disabled { opacity: .35; cursor: default; }
+    .agenda-semana, .agenda-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: .3rem; text-align: center; }
+    .agenda-semana span { font-size: .75rem; font-weight: 600; color: var(--cinza-400); padding: .2rem 0; }
+    .agenda-dias button {
+      aspect-ratio: 1; max-width: 100%; border: 0; border-radius: 12px; background: transparent;
+      font: inherit; font-size: .95rem; color: var(--tinta); cursor: pointer; font-variant-numeric: tabular-nums;
+      transition: background .2s, color .2s;
+    }
+    .agenda-dias button:hover:not(:disabled) { background: var(--ouro-claro); }
+    .agenda-dias button:disabled { color: var(--cinza-300); cursor: default; }
+    .agenda-dias button.hoje { box-shadow: inset 0 0 0 1px var(--ouro); }
+    .agenda-dias button.escolhido { background: var(--ouro); color: #fff; }
+    .agenda-dias button:focus-visible, .agenda-nav:focus-visible { outline: 3px solid var(--ouro-claro); outline-offset: 1px; }
+    .agenda-escolhido { margin-top: .7rem; font-size: .9rem; color: var(--cinza-500); text-align: center; }
+    .agenda-escolhido strong { color: var(--tinta); font-weight: 600; }
+
+    .form-erro { color: #b5462f; font-size: .92rem; }
+    .form-enviar { width: 100%; padding: 1rem 1.5rem 1.1rem; font-size: 1.15rem; border: 0; cursor: pointer; }
+    .form-enviar:focus-visible { outline: 3px solid var(--ouro-claro); outline-offset: 3px; }
+    .form-nota, .form-reserva { color: var(--cinza-500); font-size: .88rem; text-align: center; margin-top: -.6rem; }
+    .form-reserva a { color: var(--ouro-escuro); text-decoration: underline; }
+
+    /* ---------------- Rodapé ---------------- */
+    .rodape { padding: 3rem 0 3.4rem; position: relative; z-index: 2; }
+    .rodape .container {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.4rem;
+      border-top: 1px solid var(--cinza-200); padding-top: 2.4rem;
+    }
+    .rodape p { color: var(--cinza-500); font-size: .88rem; }
+    .rodape nav { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; font-size: .9rem; color: var(--cinza-500); }
+    .rodape nav a:hover { color: var(--tinta); }
+
+    /* WhatsApp flutuante */
+    .whats {
+      position: fixed; right: 22px; bottom: 22px; z-index: 40;
+      width: 58px; height: 58px; border-radius: 50%; background: var(--ouro); color: #fff;
+      display: grid; place-items: center; box-shadow: 0 12px 30px rgba(184, 146, 79, .40);
+      transition: background .25s;
+    }
+    .whats:hover { background: var(--ouro-escuro); }
+    .whats svg { width: 26px; height: 26px; }
+
+    /* =========================================================
+       TRILHA DE PATINHAS QUE ACOMPANHA A ROLAGEM
+       ========================================================= */
+    .trilha {
+      position: absolute; top: 0; left: 0; width: 100%; z-index: 3;
+      pointer-events: none; overflow: hidden;
+    }
+    .pata {
+      position: absolute; width: 26px; height: 26px; color: var(--areia);
+      transform: scale(0); will-change: transform, opacity;
+    }
+    .pata svg { width: 100%; height: 100%; display: block; }
+    @media (prefers-reduced-motion: reduce) {
+      .pata { will-change: auto; }
+      .anim { animation: none; }
+    }
+
+    /* =========================================================
+       RESPONSIVO
+       ========================================================= */
+    @media (max-width: 1024px) {
+      .grade-passeios { grid-template-columns: repeat(2, 1fr); }
+      .beneficios-grade, .quem-grade { grid-template-columns: 1fr; gap: 3.5rem; }
+      .beneficios-foto { aspect-ratio: 16 / 11; }
+      .passos { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .container { width: min(1180px, 100% - 32px); }
+      .nav-links, .nav .pilula-escura { display: none; }
+      .hamburguer { display: flex; }
+      section { padding: 5.5rem 0; }
+      .hero { min-height: 0; padding: 104px 0 2.5rem !important; }
+      .hero .container { width: min(1180px, 100% - 32px); }
+      .hero-palco { aspect-ratio: auto; width: 100%; display: flex; flex-direction: column; align-items: center; }
+      .hero-frase { position: relative; }
+      .hero-frase h1 { font-size: clamp(2.4rem, 11vw, 3.4rem); }
+      /* no celular a palavra ocupa a largura da tela sem nunca passar da borda */
+      .hero-amor {
+        left: 0; right: 0; top: 5.6rem; transform: translateX(-6%);
+        text-align: center; font-size: min(26vw, 9rem);
+      }
+      .hero-video {
+        position: relative; inset: auto; height: auto; aspect-ratio: 16 / 9;
+        width: 124%; max-width: none; margin-top: -1.2rem;
+      }
+      .hero-rodape { position: static; max-width: 440px; text-align: center; margin-top: .4rem; }
+      .hero-ctas, .hero-servicos { justify-content: center; }
+      .hero-servicos { align-items: stretch; }
+      .grade-passeios { grid-template-columns: 1fr; }
+      .cabecalho-secao h2 { font-size: 2.3rem; }
+      .agendar-grade { grid-template-columns: 1fr; gap: 2.4rem; }
+      .agendar-foto { display: none; }
+      .form-agendar { padding: 1.6rem 1.2rem; }
+      .linha { grid-template-columns: 1fr; gap: 1.4rem; }
+      .horas { grid-template-columns: repeat(3, 1fr); }
+      .agenda { padding: .8rem .6rem; }
+      .pata { width: 18px; height: 18px; }
+    }
+    @media (max-width: 480px) {
+      .passos { grid-template-columns: 1fr; }
+      .hero-ctas .pilula { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Camada das patinhas (preenchida pelo script no fim da página) -->
+  <div class="trilha" aria-hidden="true"></div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="nav">
+    <input type="checkbox" id="menu-toggle">
+    <div class="container">
+      <a href="#inicio" class="marca">
+        <svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="43" rx="13" ry="11"/><ellipse cx="15" cy="27" rx="5.5" ry="7" transform="rotate(-20 15 27)"/><ellipse cx="25" cy="17" rx="5.5" ry="7.5"/><ellipse cx="39" cy="17" rx="5.5" ry="7.5"/><ellipse cx="49" cy="27" rx="5.5" ry="7" transform="rotate(20 49 27)"/></svg>
+        <span class="pincel">Tia Edy</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#passeios">Passeios</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#quem-sou">Quem sou</a>
+        <a href="#agendar">Agendar</a>
+      </nav>
+      <label for="menu-toggle" class="hamburguer" aria-label="Abrir menu"><span></span></label>
+    </div>
+    <div class="menu-mobile">
+      <a href="#passeios">Passeios</a>
+      <a href="#beneficios">Benefícios</a>
+      <a href="#quem-sou">Quem sou</a>
+      <a href="#agendar">Agendar</a>
+      <a href="#agendar" class="pilula pilula-escura">Agendar passeio</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-palco">
+          <!-- frase de fundo, por cima do cachorro -->
+          <div class="hero-frase anim">
+            <h1 class="titulo-duplo"><span class="t1">Cada cuidado</span><span class="t2">é feito com</span></h1>
+          </div>
+          <span class="hero-amor anim anim-2" aria-hidden="true">amor</span>
+          <video class="hero-video" src="assets/golden.mp4" poster="assets/golden.png"
+                 autoplay muted loop playsinline preload="auto" aria-label="Golden retriever deitado, olhando ao redor"></video>
+          <div class="hero-rodape anim anim-3">
+            <div class="hero-ctas">
+              <a href="#agendar" class="pilula pilula-escura">Agendar passeio</a>
+              <a href="#passeios" class="pilula pilula-suave">Ver passeios</a>
+            </div>
+            <div class="hero-servicos">
+              <a href="#agendar" class="pilula pilula-servico" data-servico="Visita em domicílio">Pet Sitter</a>
+              <a href="#agendar" class="pilula pilula-servico" data-servico="Transporte pet">Transporte pet</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PASSEIOS ===================== -->
+    <section id="passeios">
+      <div class="container">
+        <div class="cabecalho-secao">
+          <span class="eyebrow">Nossos passeios</span>
+          <h2 class="titulo-duplo"><span class="t1">Um passeio</span><span class="t2">para cada jeitinho.</span></h2>
+          <p>Cada pet tem seu ritmo, sua energia e suas manias. A gente se adapta a ele.</p>
+        </div>
+
+        <div class="grade-passeios">
+          <a class="passeio" href="#agendar" data-servico="Passeio">
+            <div class="passeio-foto">
+              <img src="assets/fotos/1477884213360-7e9d7dcc1e48-900.jpg" alt="Pet sorridente passeando na calçada">
+              <span class="selo">Mais pedido</span>
+            </div>
+            <div class="passeio-corpo">
+              <h3>Passeio individual</h3>
+              <p>Atenção só para o seu pet. Ideal para pets tímidos, reativos ou que precisam de um ritmo próprio.</p>
+              <div class="passeio-rodape">
+                <div class="tags"><span>30 min</span><span>60 min</span></div>
+                <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <a class="passeio" href="#agendar" data-servico="Passeio">
+            <div class="passeio-foto">
+              <img src="assets/fotos/1494947665470-20322015e3a8-900.jpg" alt="Grupo de pets passeando na guia">
+            </div>
+            <div class="passeio-corpo">
+              <h3>Passeio em grupo</h3>
+              <p>Pequenos grupos de pets sociáveis e de porte parecido. Diversão, amigos novos e socialização.</p>
+              <div class="passeio-rodape">
+                <div class="tags"><span>Grupos pequenos</span></div>
+                <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <a class="passeio" href="#agendar" data-servico="Passeio">
+            <div class="passeio-foto">
+              <img src="assets/fotos/1530281700549-e82e7bf110d6-900.jpg" alt="Pet correndo na beira do mar">
+            </div>
+            <div class="passeio-corpo">
+              <h3>Passeio aventura</h3>
+              <p>Para os pets cheios de energia: passeios mais longos em parques, praças e áreas verdes.</p>
+              <div class="passeio-rodape">
+                <div class="tags"><span>Ar livre</span><span>Parques</span></div>
+                <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <a class="passeio" href="#agendar" data-servico="Passeio">
+            <div class="passeio-foto">
+              <img src="assets/fotos/1507146426996-ef05306b995a-900.jpg" alt="Filhote de golden retriever com coleira vermelha">
+            </div>
+            <div class="passeio-corpo">
+              <h3>Filhotes e idosos</h3>
+              <p>Passeios curtinhos e leves, no tempo deles. Adaptação à rua para filhotes e saúde para os idosinhos.</p>
+              <div class="passeio-rodape">
+                <div class="tags"><span>Ritmo leve</span></div>
+                <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <a class="passeio" href="#agendar" data-servico="Visita em domicílio">
+            <div class="passeio-foto">
+              <img src="assets/fotos/1450778869180-41d0601e046e-900.jpg" alt="Dois pets deitados juntos na grama">
+            </div>
+            <div class="passeio-corpo">
+              <h3>Visita em casa</h3>
+              <p>Cuidados e companhia no conforto do lar para quando você viaja ou passa o dia fora. Alimentação, água fresca, troca de areia, brincadeiras, carinho e atenção sob medida. Cães e gatinhos.</p>
+              <div class="passeio-rodape">
+                <div class="tags"><span>Todos os pets</span></div>
+                <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+              </div>
+            </div>
+          </a>
+
+          <a class="passeio" href="#agendar" data-servico="Passeio">
+            <div class="passeio-foto">
+              <img src="assets/fotos/1534361960057-19889db9621e-900.jpg" alt="Pet branquinho correndo na grama">
+              <span class="selo">Valor especial</span>
+            </div>
+            <div class="passeio-corpo">
+              <h3>Pacotes mensais</h3>
+              <p>Passeios fixos durante a semana para manter a rotina do seu pet, com valor especial no pacote.</p>
+              <div class="passeio-rodape">
+                <div class="tags"><span>Rotina</span></div>
+                <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BENEFÍCIOS ===================== -->
+    <section class="beneficios" id="beneficios">
+      <div class="container beneficios-grade">
+        <div class="beneficios-foto">
+          <img src="assets/fotos/1548199973-03cce0bbc87b-1100.jpg" alt="Dois pets correndo felizes em uma trilha">
+        </div>
+        <div>
+          <div class="cabecalho-secao" style="margin-bottom: 0;">
+            <span class="eyebrow">Por que passear</span>
+            <h2 class="titulo-duplo"><span class="t1">Mais saúde.</span><span class="t2">Mais alegria.</span></h2>
+            <p>Pet que passeia todo dia vive mais feliz, mais calmo e mais saudável. E você ganha um amigo tranquilo em casa.</p>
+          </div>
+          <div class="lista-beneficios">
+            <div class="beneficio"><span class="num">01</span><div><h3>Gasta energia</h3><p>Menos bagunça, latidos e coisas roídas em casa.</p></div></div>
+            <div class="beneficio"><span class="num">02</span><div><h3>Socializa</h3><p>Aprende a conviver com outros pets e pessoas.</p></div></div>
+            <div class="beneficio"><span class="num">03</span><div><h3>Menos solidão</h3><p>Companhia e carinho para quem passa o dia sozinho.</p></div></div>
+            <div class="beneficio"><span class="num">04</span><div><h3>Corpo em forma</h3><p>Controle do peso, músculos fortes e bom humor.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== QUEM SOU ===================== -->
+    <section id="quem-sou">
+      <div class="container quem-grade">
+        <div class="quem-texto">
+          <div class="cabecalho-secao" style="margin-bottom: 2rem;">
+            <span class="eyebrow">Quem sou</span>
+            <h2 class="titulo-duplo"><span class="t1">Prazer,</span><span class="t2">sou a Tia Edy! 🐾</span></h2>
+          </div>
+          <p>Minha paixão pelos animais se transformou em vocação. Ao longo de mais de 5 anos dedicados aos pets,
+            estruturei meu trabalho unindo a faculdade de Medicina Veterinária, a capacitação em Banho e Tosa e a
+            experiência de ter gerido meu próprio Pet Shop no Rio de Janeiro.</p>
+          <p>Na Tia Edy Pet Sitter &amp; Dog Walker, cada atendimento é pensado exclusivamente para o bem-estar do seu
+            cão ou gato, oferecendo passeios e cuidados no conforto do lar com toda a dedicação que ele merece!</p>
+          <ul class="lista-check">
+            <li>Respeito ao ritmo e ao jeitinho de cada pet</li>
+            <li>Fotos e localização em tempo real</li>
+            <li>Segurança em primeiro lugar: guia, coleira e trajetos conhecidos</li>
+            <li>Horários combinados com você</li>
+          </ul>
+          <a href="https://wa.me/5531984906483" target="_blank" rel="noopener" class="pilula pilula-escura">Fale comigo</a>
+        </div>
+        <div class="quem-fotos">
+          <img class="foto-tia" src="assets/tia-edy.jpg" width="1600" height="1479" alt="Retrato pintado da Tia Edy sorrindo com um spitz branco no colo">
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AGENDAMENTO ===================== -->
+    <section class="agendar" id="agendar">
+      <div class="container agendar-grade">
+        <div class="agendar-intro">
+          <span class="eyebrow">Agendamento</span>
+          <h2 class="titulo-duplo"><span class="t1">Conta sobre ele.</span><span class="t2">A gente agenda.</span></h2>
+          <p>Responda as perguntas sobre o seu pet, escolha o dia e o horário e toque em enviar. A mensagem chega pronta no WhatsApp da Tia Edy, e ela responde para confirmar.</p>
+          <img class="agendar-foto" src="assets/fotos/1530281700549-e82e7bf110d6-900.jpg" alt="Pet correndo feliz na praia">
+          <p class="agendar-fone">Prefere falar direto?</p>
+          <ul class="contatos">
+            <li>WhatsApp: <a href="https://wa.me/5531984906483" target="_blank" rel="noopener"><strong>+55 (31) 98490-6483</strong></a></li>
+            <li>Instagram: <a href="https://www.instagram.com/edypetsitter/" target="_blank" rel="noopener"><strong>@edypetsitter</strong></a></li>
+            <li>E-mail: <a href="mailto:edlaynevet@gmail.com"><strong>edlaynevet@gmail.com</strong></a></li>
+          </ul>
+        </div>
+
+        <form class="form-agendar" id="form-agendar" novalidate>
+          <!-- Tipo de serviço: define qual agendamento aparece -->
+          <fieldset class="campo">
+            <legend>Tipo de serviço</legend>
+            <div class="opcoes" data-grupo="servico">
+              <input type="radio" id="serv-passeio" name="servico" value="Passeio"><label for="serv-passeio">Passeio</label>
+              <input type="radio" id="serv-visita" name="servico" value="Visita em domicílio"><label for="serv-visita">Visita em domicílio</label>
+              <input type="radio" id="serv-transporte" name="servico" value="Transporte pet"><label for="serv-transporte">Transporte pet</label>
+            </div>
+          </fieldset>
+
+          <!-- ================= Agendamento de passeio e pet sitting ================= -->
+          <div class="modo" data-modo="cuidado">
+            <div class="linha">
+              <div class="campo">
+                <label for="pets">Pets: quantidade e espécie</label>
+                <input id="pets" name="pets" type="text" placeholder="Ex.: 1 cão e 2 gatos" autocomplete="off">
+              </div>
+              <div class="campo">
+                <label for="nome">Nome(s) do(s) pet(s)</label>
+                <input id="nome" name="nome" type="text" placeholder="Ex.: Thor e Mel" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="linha">
+              <div class="campo">
+                <label for="raca">Raça(s)</label>
+                <input id="raca" name="raca" type="text" placeholder="Ex.: Golden, SRD" autocomplete="off">
+              </div>
+              <div class="campo">
+                <label for="idade">Idade(s)</label>
+                <input id="idade" name="idade" type="text" placeholder="Ex.: 3 anos e 8 meses" autocomplete="off">
+              </div>
+            </div>
+
+            <fieldset class="campo">
+              <legend>Sexo</legend>
+              <div class="opcoes" data-grupo="sexo">
+                <input type="checkbox" id="sexo-macho" name="sexo" value="Macho"><label for="sexo-macho">Macho</label>
+                <input type="checkbox" id="sexo-femea" name="sexo" value="Fêmea"><label for="sexo-femea">Fêmea</label>
+              </div>
+            </fieldset>
+
+            <div class="campo">
+              <label for="local">Localização: bairro</label>
+              <input id="local" name="local" type="text" autocomplete="off">
+            </div>
+            <fieldset class="campo">
+              <legend>Tipo de residência</legend>
+              <div class="opcoes" data-grupo="residencia">
+                <input type="radio" id="res-casa" name="residencia" value="Casa"><label for="res-casa">Casa</label>
+                <input type="radio" id="res-ap" name="residencia" value="Apartamento"><label for="res-ap">Apartamento</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="campo">
+              <legend>Ocasião</legend>
+              <div class="opcoes" data-grupo="ocasiao">
+                <input type="radio" id="oc-viagem" name="ocasiao" value="Viagem"><label for="oc-viagem">Viagem</label>
+                <input type="radio" id="oc-rotina" name="ocasiao" value="Rotina fixa"><label for="oc-rotina">Rotina fixa</label>
+                <input type="radio" id="oc-pontual" name="ocasiao" value="Atendimento pontual"><label for="oc-pontual">Atendimento pontual</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="campo">
+              <legend>Frequência: passeios ou visitas por dia</legend>
+              <div class="opcoes" data-grupo="frequencia">
+                <input type="radio" id="freq-1" name="frequencia" value="1 por dia"><label for="freq-1">1 por dia</label>
+                <input type="radio" id="freq-2" name="frequencia" value="2 por dia"><label for="freq-2">2 por dia</label>
+                <input type="radio" id="freq-3" name="frequencia" value="3 ou mais por dia"><label for="freq-3">3 ou mais</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="campo">
+              <legend>Temperamento do pet <span class="opcional">(pode marcar mais de um)</span></legend>
+              <div class="opcoes" data-grupo="temperamento">
+                <input type="checkbox" id="temp-docil" name="temperamento" value="Dócil"><label for="temp-docil">Dócil</label>
+                <input type="checkbox" id="temp-timido" name="temperamento" value="Tímido"><label for="temp-timido">Tímido</label>
+                <input type="checkbox" id="temp-reativo" name="temperamento" value="Reativo"><label for="temp-reativo">Reativo</label>
+                <input type="checkbox" id="temp-agitado" name="temperamento" value="Agitado"><label for="temp-agitado">Agitado</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="campo">
+              <legend>Precisa de medicação contínua ou específica?</legend>
+              <div class="opcoes" data-grupo="medicacao">
+                <input type="radio" id="med-nao" name="medicacao" value="Não"><label for="med-nao">Não</label>
+                <input type="radio" id="med-sim" name="medicacao" value="Sim"><label for="med-sim">Sim</label>
+              </div>
+            </fieldset>
+            <div class="campo" id="campo-remedio" hidden>
+              <label for="remedio">Qual medicação e horário?</label>
+              <input id="remedio" name="remedio" type="text" placeholder="Ex.: 1 comprimido às 8h" autocomplete="off">
+            </div>
+          </div>
+
+          <!-- ================= Agendamento de transporte pet ================= -->
+          <div class="modo" data-modo="transporte" hidden>
+            <fieldset class="campo">
+              <legend>Espécie</legend>
+              <div class="opcoes" data-grupo="especie">
+                <input type="radio" id="esp-cao" name="especie" value="Cão"><label for="esp-cao">Cão</label>
+                <input type="radio" id="esp-gato" name="especie" value="Gato"><label for="esp-gato">Gato</label>
+                <input type="radio" id="esp-outro" name="especie" value="Outro"><label for="esp-outro">Outro</label>
+              </div>
+            </fieldset>
+
+            <div class="campo">
+              <label for="traca">Raça</label>
+              <input id="traca" name="traca" type="text" placeholder="Ex.: Golden, SRD" autocomplete="off">
+            </div>
+
+            <fieldset class="campo">
+              <legend>Porte</legend>
+              <div class="opcoes" data-grupo="porte">
+                <input type="radio" id="porte-p" name="porte" value="Pequeno"><label for="porte-p">Pequeno</label>
+                <input type="radio" id="porte-m" name="porte" value="Médio"><label for="porte-m">Médio</label>
+                <input type="radio" id="porte-g" name="porte" value="Grande"><label for="porte-g">Grande</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="campo">
+              <legend>Destino</legend>
+              <div class="opcoes" data-grupo="destino">
+                <input type="radio" id="dest-creche" name="destino" value="Creche"><label for="dest-creche">Creche</label>
+                <input type="radio" id="dest-hotel" name="destino" value="Hotel"><label for="dest-hotel">Hotel</label>
+                <input type="radio" id="dest-vet" name="destino" value="Clínica veterinária"><label for="dest-vet">Clínica veterinária</label>
+                <input type="radio" id="dest-petshop" name="destino" value="Pet shop"><label for="dest-petshop">Pet shop</label>
+                <input type="radio" id="dest-mudanca" name="destino" value="Mudança de residência"><label for="dest-mudanca">Mudança de residência</label>
+              </div>
+            </fieldset>
+
+            <!-- aparece quando escolhe o destino: nome e endereço do local -->
+            <div class="campo" id="campo-local-destino" hidden>
+              <label for="enddestino" id="label-local-destino">Nome e endereço do local</label>
+              <input id="enddestino" name="enddestino" type="text" placeholder="Ex.: nome do local, rua e bairro" autocomplete="off">
+            </div>
+
+            <!-- só aparece quando o destino é a clínica veterinária -->
+            <div class="modo" id="campo-vet" hidden>
+              <fieldset class="campo">
+                <legend>Motivo da consulta</legend>
+                <div class="opcoes" data-grupo="motivo">
+                  <input type="radio" id="mot-doente" name="motivo" value="Está doente"><label for="mot-doente">Está doente</label>
+                  <input type="radio" id="mot-cuidado" name="motivo" value="Precisa de cuidado especial"><label for="mot-cuidado">Cuidado especial</label>
+                  <input type="radio" id="mot-rotina" name="motivo" value="Consulta de rotina"><label for="mot-rotina">Rotina</label>
+                </div>
+              </fieldset>
+              <fieldset class="campo">
+                <legend>Durante a consulta</legend>
+                <div class="opcoes" data-grupo="espera">
+                  <input type="radio" id="esp-aguardar" name="espera" value="Aguardar no local"><label for="esp-aguardar">Aguardar no local</label>
+                  <input type="radio" id="esp-levar" name="espera" value="Só levar e buscar"><label for="esp-levar">Só levar e buscar</label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <!-- ================= Comum aos dois agendamentos ================= -->
+          <fieldset class="campo">
+            <legend>Pet com vacina em dia?</legend>
+            <div class="opcoes" data-grupo="vacinado">
+              <input type="radio" id="vac-sim" name="vacinado" value="Sim"><label for="vac-sim">Sim</label>
+              <input type="radio" id="vac-nao" name="vacinado" value="Não"><label for="vac-nao">Não</label>
+            </div>
+          </fieldset>
+
+          <!-- Agenda: o visitante escolhe o dia no calendário e depois o horário -->
+          <fieldset class="campo">
+            <legend id="legenda-data">Data (ou primeiro dia)</legend>
+            <div class="agenda" id="agenda">
+              <div class="agenda-topo">
+                <button type="button" class="agenda-nav" id="mes-anterior" aria-label="Mês anterior">‹</button>
+                <strong id="agenda-mes">Mês</strong>
+                <button type="button" class="agenda-nav" id="mes-proximo" aria-label="Próximo mês">›</button>
+              </div>
+              <div class="agenda-semana" aria-hidden="true">
+                <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+              </div>
+              <div class="agenda-dias" id="agenda-dias"></div>
+              <p class="agenda-escolhido" id="agenda-escolhido">Toque em um dia para escolher.</p>
+            </div>
+            <input type="hidden" id="data" name="data">
+          </fieldset>
+
+          <div class="campo" id="campo-periodo">
+            <label for="periodo">Período ou outras datas <span class="opcional">(opcional)</span></label>
+            <input id="periodo" name="periodo" type="text" placeholder="Ex.: de 10 a 20/12, ou segunda a sexta" autocomplete="off">
+          </div>
+
+          <fieldset class="campo">
+            <legend>Horário</legend>
+            <div class="opcoes horas" data-grupo="hora">
+              <input type="radio" id="h07" name="hora" value="07:00"><label for="h07">07:00</label>
+              <input type="radio" id="h08" name="hora" value="08:00"><label for="h08">08:00</label>
+              <input type="radio" id="h09" name="hora" value="09:00"><label for="h09">09:00</label>
+              <input type="radio" id="h10" name="hora" value="10:00"><label for="h10">10:00</label>
+              <input type="radio" id="h11" name="hora" value="11:00"><label for="h11">11:00</label>
+              <input type="radio" id="h12" name="hora" value="12:00"><label for="h12">12:00</label>
+              <input type="radio" id="h13" name="hora" value="13:00"><label for="h13">13:00</label>
+              <input type="radio" id="h14" name="hora" value="14:00"><label for="h14">14:00</label>
+              <input type="radio" id="h15" name="hora" value="15:00"><label for="h15">15:00</label>
+              <input type="radio" id="h16" name="hora" value="16:00"><label for="h16">16:00</label>
+              <input type="radio" id="h17" name="hora" value="17:00"><label for="h17">17:00</label>
+              <input type="radio" id="h18" name="hora" value="18:00"><label for="h18">18:00</label>
+            </div>
+          </fieldset>
+
+          <p class="form-erro" id="form-erro" role="alert" hidden>Preencha os campos marcados em vermelho para enviar.</p>
+
+          <button type="submit" class="pilula pilula-escura form-enviar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+            Enviar pelo WhatsApp
+          </button>
+          <p class="form-nota">O WhatsApp abre com a mensagem pronta. É só tocar em enviar.</p>
+          <p class="form-reserva" id="form-reserva" hidden>Se o WhatsApp não abriu, <a id="form-link" href="https://wa.me/5531984906483" target="_blank" rel="noopener">toque aqui para abrir</a>.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <a href="#inicio" class="marca">
+        <svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="43" rx="13" ry="11"/><ellipse cx="15" cy="27" rx="5.5" ry="7" transform="rotate(-20 15 27)"/><ellipse cx="25" cy="17" rx="5.5" ry="7.5"/><ellipse cx="39" cy="17" rx="5.5" ry="7.5"/><ellipse cx="49" cy="27" rx="5.5" ry="7" transform="rotate(20 49 27)"/></svg>
+        <span class="pincel">Tia Edy</span>
+      </a>
+      <nav>
+        <a href="#passeios">Passeios</a>
+        <a href="#quem-sou">Quem sou</a>
+        <a href="#agendar">Agendar</a>
+        <a href="https://wa.me/5531984906483" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.instagram.com/edypetsitter/" target="_blank" rel="noopener">Instagram @edypetsitter</a>
+        <a href="mailto:edlaynevet@gmail.com">edlaynevet@gmail.com</a>
+      </nav>
+      <p>© 2026 Tia Edy · Passeios com pets</p>
+    </div>
+  </footer>
+
+  <a class="whats" href="https://wa.me/5531984906483" target="_blank" rel="noopener" aria-label="Fale pelo WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+  </a>
+
+  <!-- =========================================================
+       Agendamento: monta a mensagem com os dados do cachorro
+       e abre o WhatsApp da Tia Edy com ela pronta.
+       ========================================================= -->
+  <script>
+    (function () {
+      var NUMERO = '5531984906483';   // WhatsApp que recebe os agendamentos: +55 (31) 98490-6483
+      var form = document.getElementById('form-agendar');
+      if (!form) return;
+      var erro = document.getElementById('form-erro');
+      var reserva = document.getElementById('form-reserva');
+      var link = document.getElementById('form-link');
+      var campoRemedio = document.getElementById('campo-remedio');
+
+      // valor de um grupo de opções (rádio ou caixas): textos marcados separados por vírgula
+      function marcados(nome) {
+        return Array.prototype.map.call(form.querySelectorAll('input[name="' + nome + '"]:checked'), function (i) { return i.value; }).join(', ');
+      }
+      function grupo(nome) { return form.querySelector('[data-grupo="' + nome + '"]'); }
+
+      // cards de passeio: levam ao agendamento já com o tipo de serviço marcado
+      document.querySelectorAll('a[data-servico]').forEach(function (card) {
+        card.addEventListener('click', function () {
+          var alvo = form.querySelector('input[name="servico"][value="' + card.dataset.servico + '"]');
+          if (alvo) { alvo.checked = true; grupo('servico').classList.remove('invalido'); aplicarModo(); }
+        });
+      });
+
+      // dois agendamentos: passeio/pet sitting ou transporte pet
+      var modoCuidado = form.querySelector('[data-modo="cuidado"]');
+      var modoTransporte = form.querySelector('[data-modo="transporte"]');
+      var campoVet = document.getElementById('campo-vet');
+      var campoPeriodo = document.getElementById('campo-periodo');
+      var legendaData = document.getElementById('legenda-data');
+      function ehTransporte() { return marcados('servico') === 'Transporte pet'; }
+      function aplicarModo() {
+        var t = ehTransporte();
+        modoCuidado.hidden = t;
+        modoTransporte.hidden = !t;
+        campoPeriodo.hidden = t;
+        legendaData.textContent = t ? 'Data' : 'Data (ou primeiro dia)';
+      }
+
+      form.addEventListener('change', function (e) {
+        // medicação: pergunta "qual" só aparece quando a resposta é Sim
+        if (e.target.name === 'medicacao') {
+          campoRemedio.hidden = e.target.value !== 'Sim';
+          if (campoRemedio.hidden) form.remedio.classList.remove('invalido');
+        }
+        if (e.target.name === 'servico') aplicarModo();
+        // clínica veterinária: mostra motivo e espera
+        if (e.target.name === 'destino') {
+          campoVet.hidden = e.target.value !== 'Clínica veterinária';
+          // pede o nome e o endereço do local escolhido
+          var rotulos = {
+            'Creche': 'Nome e endereço da creche',
+            'Hotel': 'Nome e endereço do hotel',
+            'Clínica veterinária': 'Nome e endereço da clínica',
+            'Pet shop': 'Nome e endereço do pet shop',
+            'Mudança de residência': 'Endereço da nova residência'
+          };
+          document.getElementById('label-local-destino').textContent = rotulos[e.target.value] || 'Nome e endereço do local';
+          document.getElementById('enddestino').placeholder = e.target.value === 'Mudança de residência'
+            ? 'Ex.: rua, número e bairro' : 'Ex.: nome do local, rua e bairro';
+          document.getElementById('campo-local-destino').hidden = false;
+        }
+      });
+
+      /* ---------- Calendário ---------- */
+      var agenda = document.getElementById('agenda');
+      var diasEl = document.getElementById('agenda-dias');
+      var mesEl = document.getElementById('agenda-mes');
+      var escolhidoEl = document.getElementById('agenda-escolhido');
+      var campoData = document.getElementById('data');
+      var btnAnterior = document.getElementById('mes-anterior');
+      var btnProximo = document.getElementById('mes-proximo');
+      var MESES_A_FRENTE = 6;   // até quantos meses à frente dá para agendar
+
+      var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+      var vista = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+      var limite = new Date(hoje.getFullYear(), hoje.getMonth() + MESES_A_FRENTE, 1);
+      var escolhido = null;
+
+      function doisDig(n) { return (n < 10 ? '0' : '') + n; }
+      function maiuscula(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
+      function dataCurta(d) { return doisDig(d.getDate()) + '/' + doisDig(d.getMonth() + 1) + '/' + d.getFullYear(); }
+      function dataLonga(d) {
+        return maiuscula(d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }));
+      }
+
+      function desenhar() {
+        mesEl.textContent = maiuscula(vista.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }));
+        btnAnterior.disabled = vista <= new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+        btnProximo.disabled = vista >= limite;
+        diasEl.innerHTML = '';
+        var vazios = vista.getDay();
+        for (var v = 0; v < vazios; v++) diasEl.appendChild(document.createElement('span'));
+        var total = new Date(vista.getFullYear(), vista.getMonth() + 1, 0).getDate();
+        for (var dia = 1; dia <= total; dia++) {
+          var d = new Date(vista.getFullYear(), vista.getMonth(), dia);
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = dia;
+          b.setAttribute('aria-label', dataLonga(d));
+          if (d < hoje) b.disabled = true;
+          if (d.getTime() === hoje.getTime()) b.classList.add('hoje');
+          if (escolhido && d.getTime() === escolhido.getTime()) { b.classList.add('escolhido'); b.setAttribute('aria-pressed', 'true'); }
+          b.dataset.t = d.getTime();
+          diasEl.appendChild(b);
+        }
+      }
+
+      diasEl.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b || b.disabled) return;
+        escolhido = new Date(Number(b.dataset.t));
+        campoData.value = dataCurta(escolhido);
+        escolhidoEl.innerHTML = 'Dia escolhido: <strong>' + dataLonga(escolhido) + '</strong>';
+        agenda.classList.remove('invalido');
+        desenhar();
+      });
+      btnAnterior.addEventListener('click', function () { vista = new Date(vista.getFullYear(), vista.getMonth() - 1, 1); desenhar(); });
+      btnProximo.addEventListener('click', function () { vista = new Date(vista.getFullYear(), vista.getMonth() + 1, 1); desenhar(); });
+      desenhar();
+
+      // tira o vermelho do campo assim que a pessoa começa a corrigir
+      form.addEventListener('input', function (e) {
+        if (e.target.classList) e.target.classList.remove('invalido');
+        var g = e.target.closest && e.target.closest('.opcoes');
+        if (g) g.classList.remove('invalido');
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var v = {};
+        var faltando = [];
+        function exigirTexto(lista) {
+          lista.forEach(function (n) {
+            v[n] = form[n].value.trim();
+            form[n].classList.toggle('invalido', !v[n]);
+            if (!v[n]) faltando.push(form[n]);
+          });
+        }
+        function exigirGrupo(lista) {
+          lista.forEach(function (n) {
+            v[n] = marcados(n);
+            grupo(n).classList.toggle('invalido', !v[n]);
+            if (!v[n]) faltando.push(grupo(n).querySelector('input'));
+          });
+        }
+        // limpa o vermelho dos campos que estão escondidos
+        form.querySelectorAll('[hidden] .invalido').forEach(function (el) { el.classList.remove('invalido'); });
+
+        exigirGrupo(['servico']);
+        var transporte = v.servico === 'Transporte pet';
+        var vet = false;
+        if (v.servico && !transporte) {
+          exigirTexto(['pets', 'nome', 'raca', 'idade', 'local']);
+          exigirGrupo(['sexo', 'residencia', 'ocasiao', 'frequencia', 'temperamento', 'medicacao']);
+          // qual medicação, só quando a resposta é Sim
+          v.remedio = form.remedio.value.trim();
+          var precisaRemedio = v.medicacao === 'Sim' && !v.remedio;
+          form.remedio.classList.toggle('invalido', precisaRemedio);
+          if (precisaRemedio) faltando.push(form.remedio);
+          v.periodo = form.periodo.value.trim();
+        }
+        if (transporte) {
+          exigirGrupo(['especie']);
+          exigirTexto(['traca']);
+          exigirGrupo(['porte', 'destino']);
+          if (v.destino) exigirTexto(['enddestino']);
+          vet = v.destino === 'Clínica veterinária';
+          if (vet) exigirGrupo(['motivo', 'espera']);
+        }
+        exigirGrupo(['vacinado', 'hora']);
+        // calendário
+        agenda.classList.toggle('invalido', !escolhido);
+        if (!escolhido) faltando.push(diasEl.querySelector('button:not(:disabled)') || btnProximo);
+
+        if (faltando.length) {
+          erro.hidden = false;
+          faltando.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; })[0].focus();
+          return;
+        }
+        erro.hidden = true;
+
+        var quando = '*Data:* ' + dataLonga(escolhido) + ' (' + dataCurta(escolhido) + ')\n';
+        var mensagem;
+        if (transporte) {
+          mensagem =
+            'Olá, Tia Edy! Quero agendar um transporte pet.\n\n' +
+            '*Espécie:* ' + v.especie + '\n' +
+            '*Raça:* ' + v.traca + '\n' +
+            '*Porte:* ' + v.porte + '\n' +
+            '*Destino:* ' + v.destino + '\n' +
+            '*Local:* ' + v.enddestino + '\n' +
+            (vet ? '*Motivo:* ' + v.motivo + '\n' + '*Durante a consulta:* ' + v.espera + '\n' : '') +
+            '*Vacina em dia:* ' + v.vacinado + '\n' +
+            quando +
+            '*Horário:* ' + v.hora;
+        } else {
+          mensagem =
+            'Olá, Tia Edy! Quero agendar um atendimento para o meu pet.\n\n' +
+            '*Serviço:* ' + v.servico + '\n' +
+            '*Pets:* ' + v.pets + '\n' +
+            '*Nome(s):* ' + v.nome + '\n' +
+            '*Raça(s):* ' + v.raca + '\n' +
+            '*Idade(s):* ' + v.idade + '\n' +
+            '*Sexo:* ' + v.sexo + '\n' +
+            '*Localização:* ' + v.local + ' (' + v.residencia + ')\n' +
+            '*Ocasião:* ' + v.ocasiao + '\n' +
+            '*Frequência:* ' + v.frequencia + '\n' +
+            '*Temperamento:* ' + v.temperamento + '\n' +
+            '*Medicação:* ' + (v.medicacao === 'Sim' ? 'Sim, ' + v.remedio : 'Não') + '\n' +
+            '*Vacina em dia:* ' + v.vacinado + '\n' +
+            quando +
+            (v.periodo ? '*Período/datas:* ' + v.periodo + '\n' : '') +
+            '*Horário:* ' + v.hora;
+        }
+        var url = 'https://wa.me/' + NUMERO + '?text=' + encodeURIComponent(mensagem);
+
+        link.href = url;
+        reserva.hidden = false;   // link de reserva caso o navegador bloqueie a nova aba
+        var janela = window.open(url, '_blank');
+        if (janela) janela.opener = null;
+      });
+    })();
+  </script>
+
+  <!-- =========================================================
+       Patinhas que descem junto com a rolagem.
+       Loop de requestAnimationFrame lendo scrollY (sem eventos de scroll):
+       cada pata cresce ao entrar na tela e encolhe ao sair pelo topo.
+       ========================================================= -->
+  <script>
+    (function () {
+      var trilha = document.querySelector('.trilha');
+      var SVG = '<svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="43" rx="13" ry="11"/><ellipse cx="15" cy="27" rx="5.5" ry="7" transform="rotate(-20 15 27)"/><ellipse cx="25" cy="17" rx="5.5" ry="7.5"/><ellipse cx="39" cy="17" rx="5.5" ry="7.5"/><ellipse cx="49" cy="27" rx="5.5" ry="7" transform="rotate(20 49 27)"/></svg>';
+      var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var patas = [];
+      var ultimoY = -1, ultimoH = 0;
+
+      function montar() {
+        var W = document.documentElement.clientWidth;
+        var vh = window.innerHeight;
+        var H = document.documentElement.scrollHeight;
+        trilha.style.height = H + 'px';
+        trilha.innerHTML = '';
+        patas = [];
+
+        var mobile = W < 768;
+        var passo = mobile ? 74 : 92;            // distância entre passos
+        var tam = mobile ? 18 : 26;
+        var amp = mobile ? 6 : 26;               // quanto a trilha "serpenteia"
+        var margem = Math.max(0, (W - 1180) / 2);
+
+        // Uma trilha à direita sempre; outra à esquerda quando há espaço
+        var trilhas = [{ x: W - (margem > 70 ? margem / 2 : (mobile ? 16 : 34)) - tam / 2, fase: 0 }];
+        if (!mobile) trilhas.push({ x: (margem > 70 ? margem / 2 : 34) - tam / 2, fase: Math.PI });
+
+        var inicio = vh * 0.85;
+        trilhas.forEach(function (t, k) {
+          for (var i = 0, y = inicio + k * passo / 2; y < H - 120; i++, y += passo) {
+            var ang = i * 0.32 + t.fase;
+            var lado = (i % 2 === 0 ? -1 : 1) * (mobile ? 6 : 11);   // pata esquerda/direita
+            var x = t.x + Math.sin(ang) * amp + lado;
+            var rot = 180 - Math.cos(ang) * (mobile ? 8 : 22);       // dedos apontando para baixo
+            var el = document.createElement('span');
+            el.className = 'pata';
+            el.innerHTML = SVG;
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            trilha.appendChild(el);
+            patas.push({ el: el, y: y, tam: tam, rot: rot, ultimo: -1 });
+          }
+        });
+        ultimoH = H;
+        ultimoY = -1;
+        if (reduz) patas.forEach(function (p) {
+          p.el.style.transform = 'rotate(' + p.rot + 'deg) scale(1)';
+          p.el.style.opacity = .35;
+        });
+      }
+
+      function quadro() {
+        atualizar();
+        requestAnimationFrame(quadro);
+      }
+
+      function atualizar() {
+        var y = window.scrollY;
+        if (document.documentElement.scrollHeight !== ultimoH) montar();
+        if (y !== ultimoY && !reduz) {
+          ultimoY = y;
+          var vh = window.innerHeight;
+          var frente = y + vh * 0.82;           // o "cachorro" vai à frente, perto do fim da tela
+          for (var i = 0; i < patas.length; i++) {
+            var p = patas[i];
+            var topo = p.y - y;                 // posição na tela
+            var baixo = topo + p.tam;
+            var entra = Math.min(1, Math.max(0, (frente - p.y) / 70));
+            var sai = Math.min(1, Math.max(0, baixo / (vh * 0.4)));
+            var s = (baixo <= 0 || topo >= vh) ? 0 : Math.min(entra, sai);
+            s = Math.round(s * 100) / 100;
+            if (s !== p.ultimo) {
+              p.ultimo = s;
+              p.el.style.transform = 'rotate(' + p.rot + 'deg) scale(' + s + ')';
+              p.el.style.opacity = (s * 0.55).toFixed(2);
+            }
+          }
+        }
+      }
+
+      montar();
+      // reserva: se o navegador pausar o requestAnimationFrame, a rolagem ainda atualiza
+      window.addEventListener('scroll', atualizar, { passive: true });
+      window.addEventListener('resize', function () { ultimoH = 0; });
+      window.addEventListener('load', function () { ultimoH = 0; });
+      requestAnimationFrame(quadro);
+    })();
+  </script>
+</body>
+</html>
